@@ -10,6 +10,7 @@ import static javax.swing.BorderFactory.createLineBorder;
 public class Subpanel extends JPanel {
 
     public Subpanel() {
+        setLayout(new GridLayout(1, 1, 1, 1));
         setBorder(createLineBorder(Color.BLACK));
         addFocusListener(new FocusListener() {
             @Override
