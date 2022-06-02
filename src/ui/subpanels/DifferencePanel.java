@@ -15,45 +15,136 @@ public class DifferencePanel extends Subpanel {
     public DifferencePanel(Sim sim1, Sim sim2) {
         this.sim1 = sim1;
         this.sim2 = sim2;
+        picture = new JLabel();
         add(picture);
     }
 
     @Override
     public void respond() {
 
-        picture.setIcon(new ImageIcon(imgResize(new ImageIcon(imageSubtract(sim1.getPicture(), sim2.getPicture())))));
+        if (sim1.getPicture() != null && sim2.getPicture() != null) {
+            BufferedImage gs1 = customGrayscale(sim1.getPicture());
+            BufferedImage gs2 = customGrayscale(sim2.getPicture());
+
+            picture.setIcon(new ImageIcon(imgResize(new ImageIcon(imageSubtract(gs1, gs2)))));
+        }
+
+
+    }
+
+    /**
+     * Okay so there is a LOT to talk about here.
+     * The reason that a custom grayscale conversion function exists is that
+     * the Turbo colormap (the colormap we use for CFD) is very weird. The RGB
+     * values go up and down all over the place. If I were to use a standard
+     * grayscale conversion, the areas of extremely red and extremely blue
+     * would look exactly the same. I can't look at a single RGB value either
+     * because they are not high at one end and low at the other. As far as I
+     * am aware, no polynomial up to 6 degrees fit the blue and red curves to
+     * any degree to accuracy. A 6 degree curve would fit the green curve, but
+     * good luck finding analytical solution to that. I am not using numerical
+     * root finding because it's too slow for this purpose.
+     * So after probably over 5 hours of fuckery in Excel, I came up with two
+     * functions are would produce a curve that I could work with, which is
+     * any curve that always go up or down because only on mathematical
+     * variants of RGB vs. position graphs. The problem is, the function is
+     * not linear, so there are places where the rate of change of grayscaled
+     * picture does not match the original picture, and that the grayscaled
+     * picture is nowhere near a perfect representation of the position of
+     * the RGB value on the colormap. So if you want to improve on this, you
+     * can totally do that.
+     * You might be saying why don't you just create a map that contains RGB
+     * values and their positions on the colormap. Well, that's simply too
+     * slow. Because you need to look through 256 points for every pixel. And
+     * they would not be exact match, so you need to do more calculations for
+     * approximate match. That is way too slow.
+     * @param img image
+     * @return custom grayscale image
+     */
+    private BufferedImage customGrayscale(BufferedImage img) {
+
+        // get size of picture
+        int width = img.getWidth();
+        int height = img.getHeight();
+
+        // initialize
+        // Doing this outside of the loop to make it faster
+        int[] color = new int[3];
+        float e;
+        float f;
+        float used;
+        Color pixel;
+        BufferedImage newImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                color = img.getRaster().getPixel(i, j, new int[3]);
+
+                // random calculations that I came up with on Excel
+                // that converts RGB to position on color map.
+                // The result is no way near linear, it's actually
+                // closer to vertically offset exponential function
+                // than anything else. So keep that in mind.
+                e = (float) color[2] / color[1] * 3;
+                f = (float) ((float) color[2] / color[0] - 1.5);
+                if (e > f && color[2] > color[0] && color[2] > color[1]) {
+                    used = e;
+                } else if (e > f && (color[2] < color[0] || color[2] < color[1])) {
+                    used = f;
+                } else {
+                    used = f;
+                }
+                used = (float) ((Math.pow(100, (1 - ((used + 1.47) / 11.1761036789298))) - 1) / 98.8761852602268);
+
+                // I SUSPECT (keyword: suspect) what is happening is that
+                // because the texts are black, the algorithm above does
+                // not know what to with it because it's outside of the
+                // designed color range. So it just happens to output
+                // negative numbers. This is just here to negate that issue.
+                if (used < 0) {
+                    used = 0;
+                } else if (used > 1) {
+                    used = 1;
+                }
+
+                // set grayscale
+                pixel = new Color(used, used ,used);
+                newImg.setRGB(i, j, pixel.getRGB());
+
+            }
+        }
+
+        return newImg;
 
     }
 
     private BufferedImage imageSubtract(BufferedImage img1, BufferedImage img2) {
 
-        // get size of picture
+        // get size
         int width = img1.getWidth();
         int height = img1.getHeight();
 
-        // initialize arrays
-        byte[][] subtractedGreyscale = new byte[width][height];
-        int[] color1 = new int[3];
-        int[] color2 = new int[3];
-        Color difference;
-        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);
+        // init
+        // Again, to make it faster
+        BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        float diff;
+        Color diffColor;
 
-        // get green for each pixel and use it to convert to greyscale
+        // subtract
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                color1 = img1.getRaster().getPixel(i, j, new int[3]);
-                color2 = img2.getRaster().getPixel(i, j, new int[3]);
+                diff = ((float) (img1.getRaster().getPixel(i, j, new int[3])[0] / 255.0)) - ((float) (img2.getRaster().getPixel(i, j, new int[3])[0] / 255.0));
+                diff += 1;
+                diff /= 2;
 
-                // find difference
-                difference = new Color(color1[0] - color2[0], color1[1] - color2[1], color1[2] - color2[2]);
-
-                // greyscale difference
-                bufferedImage.setRGB(i, j, difference.getRGB());
+                diffColor = new Color(diff, diff, diff);
+                result.setRGB(i, j, diffColor.getRGB());
 
             }
         }
 
-        return bufferedImage;
+        return result;
+
     }
 
 }
