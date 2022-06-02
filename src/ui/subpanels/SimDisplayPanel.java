@@ -22,33 +22,10 @@ public class SimDisplayPanel extends Subpanel {
     public void respond() {
         sim.newSim();
         if (sim.isValid()) {
-            picture.setIcon(new ImageIcon(resize(new ImageIcon(sim.getPicture()))));
+            picture.setIcon(new ImageIcon(imgResize(new ImageIcon(sim.getPicture()))));
         }
-    }
-
-    /**
-     * Resize the picture
-     */
-    private Image resize(ImageIcon imageIcon) {
-
-        // get image size
-        double imgWidth = imageIcon.getIconWidth();
-        double imgHeight = imageIcon.getIconHeight();
-
-        // calculate the ratio of image size and panel size
-        double widthRatio = imgWidth / getWidth();
-        double heightRatio = imgHeight / getHeight();
-
-        // the bigger ratio is the limiting factor
-        double rescaleRatio = widthRatio > heightRatio ? widthRatio : heightRatio;
-
-        // rescaled size
-        int newImgWidth = (int) Math.round(imgWidth / rescaleRatio);
-        int newImgHeight = (int) Math.round(imgHeight / rescaleRatio);
-
-        // rescale image
-        return imageIcon.getImage().getScaledInstance(newImgWidth, newImgHeight, Image.SCALE_FAST);
-
+        ((Subpanel) getParent().getComponent(2)).respond();
+        ((Subpanel) getParent().getComponent(3)).respond();
     }
 
 }

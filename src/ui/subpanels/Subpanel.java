@@ -31,4 +31,29 @@ public class Subpanel extends JPanel {
         // intentionally left blank as a boilerplate for child classes
     }
 
+    /**
+     * Resize the picture
+     */
+    protected Image imgResize(ImageIcon imageIcon) {
+
+        // get image size
+        double imgWidth = imageIcon.getIconWidth();
+        double imgHeight = imageIcon.getIconHeight();
+
+        // calculate the ratio of image size and panel size
+        double widthRatio = imgWidth / getWidth();
+        double heightRatio = imgHeight / getHeight();
+
+        // the bigger ratio is the limiting factor
+        double rescaleRatio = Math.max(widthRatio, heightRatio);
+
+        // rescaled size
+        int newImgWidth = (int) Math.round(imgWidth / rescaleRatio);
+        int newImgHeight = (int) Math.round(imgHeight / rescaleRatio);
+
+        // rescale image
+        return imageIcon.getImage().getScaledInstance(newImgWidth, newImgHeight, Image.SCALE_FAST);
+
+    }
+
 }

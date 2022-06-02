@@ -27,9 +27,15 @@ public class DispPane extends JPanel {
      * Adds JPanels to each of the four slots in GridLayout in contentPane
      */
     private void addPanels() {
-        add(new SimDisplayPanel(new Sim()));
-        add(new SimDisplayPanel(new Sim()));
-        add(new DifferencePanel());
+
+        // new sims
+        Sim sim1 = new Sim();
+        Sim sim2 = new Sim();
+
+        // add subpanels
+        add(new SimDisplayPanel(sim1));
+        add(new SimDisplayPanel(sim2));
+        add(new DifferencePanel(sim1, sim2));
         add(new OverlayPanel());
     }
 
