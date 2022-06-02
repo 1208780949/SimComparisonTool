@@ -10,6 +10,7 @@ public class DifferencePanel extends Subpanel {
 
     private final Sim sim1;
     private final Sim sim2;
+    private BufferedImage differenceImg;
     private JLabel picture;
 
     public DifferencePanel(Sim sim1, Sim sim2) {
@@ -23,10 +24,19 @@ public class DifferencePanel extends Subpanel {
     public void respond() {
 
         if (sim1.getPicture() != null && sim2.getPicture() != null) {
+
+            // custom grayscale conversion
             BufferedImage gs1 = customGrayscale(sim1.getPicture());
             BufferedImage gs2 = customGrayscale(sim2.getPicture());
 
-            picture.setIcon(new ImageIcon(imgResize(new ImageIcon(imageSubtract(gs1, gs2)))));
+            // if differenceImg is not initialized, initialize it
+            if (differenceImg == null) {
+                differenceImg = new BufferedImage(gs1.getWidth(), gs1.getHeight(), BufferedImage.TYPE_INT_RGB);
+            }
+
+            // calculate and display difference
+            differenceImg = imageSubtract(gs1, gs2);
+            picture.setIcon(new ImageIcon(imgResize(new ImageIcon(differenceImg))));
         }
 
 
