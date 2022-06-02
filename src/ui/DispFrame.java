@@ -9,9 +9,11 @@ public class DispFrame extends JFrame {
         super("fsaeSTAREvo Sim Comparison Tool");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setMinimumSize(new Dimension(400, 200));
         setContentPane(new DispPane());
-        setVisible(true);
         initMenuBar();
+        setVisible(true);
+
     }
 
     /**
@@ -25,7 +27,7 @@ public class DispFrame extends JFrame {
 
         // add menus
         menuBar.add(initFileMenu());
-        menuBar.add(initSettingsMenu());
+        menuBar.add(initViewMenu());
 
         // add menu bar to ui.DispFrame
         setJMenuBar(menuBar);
@@ -52,9 +54,9 @@ public class DispFrame extends JFrame {
      * scenes and view to look at
      * @return settings menu
      */
-    private JMenu initSettingsMenu() {
+    private JMenu initViewMenu() {
 
-        JMenu settings = new JMenu("Settings");
+        JMenu view = new JMenu("View");
 
         // 2d scenes
         JMenu scenes2DMenu = new JMenu("2D scenes");
@@ -63,35 +65,35 @@ public class DispFrame extends JFrame {
         scenes2DMenu.add(new JMenuItem("Velocity Glyph"));
         scenes2DMenu.add(new JMenuItem("Flow Angularity"));
         scenes2DMenu.add(new JMenuItem("Vorticity"));
-        settings.add(scenes2DMenu);
+        view.add(scenes2DMenu);
 
         // 2d views menu
         JMenu viewsMenu = new JMenu("2D views");
         viewsMenu.add(new JMenuItem("AftFore"));
         viewsMenu.add(new JMenuItem("Profile"));
         viewsMenu.add(new JMenuItem("TopBottom"));
-        settings.add(viewsMenu);
+        view.add(viewsMenu);
 
         // 2d position menu
         JMenuItem position = new JMenuItem("Set 2D position");
-        settings.add(position);
+        view.add(position);
 
         // 3d scenes menu
         JMenu scene3DMenu = new JMenu("3D scenes");
         scene3DMenu.add(new JMenuItem("Pressure Coefficient"));
         scene3DMenu.add(new JMenuItem("WSS Flow Separation Indicator"));
-        settings.add(scene3DMenu);
+        view.add(scene3DMenu);
 
-        settings.addSeparator();
+        view.addSeparator();
 
         // image quality menu
         JMenu qualityMenu = new JMenu("Image Quality");
         qualityMenu.add(new JMenuItem("High"));
         qualityMenu.add(new JMenuItem("Medium"));
         qualityMenu.add(new JMenuItem("Low (Default)"));
-        settings.add(qualityMenu);
+        view.add(qualityMenu);
 
-        return settings;
+        return view;
     }
 
 }
