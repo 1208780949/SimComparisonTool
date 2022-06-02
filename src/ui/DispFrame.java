@@ -1,7 +1,10 @@
 package ui;
 
+import main.SettingsIO;
+
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 public class DispFrame extends JFrame {
 
@@ -40,6 +43,10 @@ public class DispFrame extends JFrame {
     private JMenu initFileMenu() {
 
         JMenu file = new JMenu("File");
+
+        JMenuItem defaultDir = new JMenuItem("Default Directory");
+        defaultDir.addActionListener(e -> defaultDirActionListener());
+        file.add(defaultDir);
 
         JMenuItem exit = new JMenuItem("Exit");
         exit.addActionListener(e -> System.exit(0));
@@ -94,6 +101,12 @@ public class DispFrame extends JFrame {
         view.add(qualityMenu);
 
         return view;
+    }
+
+    // action listeners
+
+    public void defaultDirActionListener() {
+
     }
 
 }
