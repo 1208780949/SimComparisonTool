@@ -3,6 +3,7 @@ package ui;
 import main.SettingsIO;
 import main.SettingsKeys;
 import main.SimComparisonTool;
+import ui.subpanels.actionListeners.DefaultDirActionListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -48,7 +49,7 @@ public class DispFrame extends JFrame {
         JMenu file = new JMenu("File");
 
         JMenuItem defaultDir = new JMenuItem("Default Directory");
-        defaultDir.addActionListener(e -> defaultDirActionListener());
+        defaultDir.addActionListener(new DefaultDirActionListener());
         file.add(defaultDir);
 
         JMenuItem exit = new JMenuItem("Exit");
@@ -104,30 +105,6 @@ public class DispFrame extends JFrame {
         view.add(qualityMenu);
 
         return view;
-    }
-
-    // action listeners
-
-    /**
-     * Called when default directory menu item is pressed
-     */
-    public void defaultDirActionListener() {
-
-        // variables
-        String defaultDir = SimComparisonTool.settingsIO.getSetting(SettingsKeys.DEFAULT_DIRECTORY);
-        String initialDir = defaultDir == null ? System.getProperty("user.dir") : defaultDir;
-
-        // file chooser
-        JFileChooser fc = new JFileChooser(initialDir);
-        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        int choice = fc.showOpenDialog(SimComparisonTool.dispFrame);
-        if (choice == JFileChooser.APPROVE_OPTION) {
-            defaultDir = fc.getSelectedFile().getPath();
-        }
-
-        // set default directory
-        SimComparisonTool.settingsIO.addSetting(SettingsKeys.DEFAULT_DIRECTORY, defaultDir);
-
     }
 
 }
