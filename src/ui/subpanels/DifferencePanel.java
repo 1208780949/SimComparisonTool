@@ -11,7 +11,7 @@ public class DifferencePanel extends Subpanel {
 
 
     private BufferedImage differenceImg;
-    private JLabel picture;
+    private final JLabel picture;
     private boolean autoUpdate;
 
     public DifferencePanel() {

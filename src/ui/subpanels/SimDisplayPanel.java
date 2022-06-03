@@ -26,7 +26,7 @@ public class SimDisplayPanel extends Subpanel {
             showPicture();
         }
         ((DifferencePanel) getParent().getComponent(2)).showPicture(false);
-        ((Subpanel) getParent().getComponent(3)).showPicture();
+        ((OverlayPanel) getParent().getComponent(3)).showPicture();
     }
 
     @Override
