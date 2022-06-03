@@ -21,6 +21,7 @@ public class DispFrame extends JFrame {
         setMinimumSize(new Dimension(400, 200));
         setContentPane(new DispPane());
         initMenuBar();
+        this.addKeyListener();
         setVisible(true);
 
     }
@@ -128,6 +129,16 @@ public class DispFrame extends JFrame {
         view.add(qualityMenu);
 
         return view;
+    }
+
+    private void addKeyListener() {
+        KeyboardScrollListener listener = new KeyboardScrollListener();
+        this.addKeyListener(listener);
+        this.getContentPane().addKeyListener(listener);
+        this.getContentPane().getComponent(0).addKeyListener(listener);
+        this.getContentPane().getComponent(1).addKeyListener(listener);
+        this.getContentPane().getComponent(2).addKeyListener(listener);
+        this.getContentPane().getComponent(3).addKeyListener(listener);
     }
 
     /**
