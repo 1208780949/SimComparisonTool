@@ -7,6 +7,7 @@ import ui.subpanels.actionListeners.PositionChangeActionListener;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -138,9 +139,28 @@ public class DispFrame extends JFrame {
     private void addKeyListener() {
         KeyboardScrollListener listener = new KeyboardScrollListener();
 
-        for (Component c : this.getRootPane().getComponents()) {
+        // get all components in dispFrame and add key listener
+        List<Component> allComp = getAllComponents(this);
+        for (Component c : allComp) {
             c.addKeyListener(listener);
         }
+    }
+
+    /**
+     * Get all components recursively.
+     * Thanks, stack overflow
+     * @param c container
+     * @return list of all components
+     */
+    private List<Component> getAllComponents(final Container c) {
+        Component[] comps = c.getComponents();
+        List<Component> compList = new ArrayList<Component>();
+        for (Component comp : comps) {
+            compList.add(comp);
+            if (comp instanceof Container)
+                compList.addAll(getAllComponents((Container) comp));
+        }
+        return compList;
     }
 
     /**
@@ -150,18 +170,17 @@ public class DispFrame extends JFrame {
      */
     public String updatePosition() {
 
+        // sort files by name
         String[] files = SimComparisonTool.getFilesInDisplayer();
+        sortFileNames(files);
 
-        // don't continue if it's null
+        // stop if files is null
         if (files == null) {
             return null;
         }
 
         // initialize positions array
         String[] positions = new String[files.length];
-
-        // sort by file name
-        sortedFileNames = Arrays.stream(files).sorted().toList();
 
         // extract position
         for (int i = 0; i < files.length; i++) {
@@ -180,9 +199,27 @@ public class DispFrame extends JFrame {
 
     }
 
+    /**
+     * Sorts all the files in a directory by its name
+     */
+    private void sortFileNames(String[] files) {
+
+        if (files == null) {
+            return;
+        }
+
+        // sort by file name
+        sortedFileNames = Arrays.stream(files).sorted().toList();
+    }
+
     // getters
 
     public List<String> getSortedFileNames() {
+
+        // if sorted file names does not exist, create it
+        if (sortedFileNames == null) {
+            sortFileNames(SimComparisonTool.getFilesInDisplayer());
+        }
         return sortedFileNames;
     }
 }

@@ -10,38 +10,49 @@ public class KeyboardScrollListener implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-        if (e.getKeyCode() == 37) {
-            // left
-            lastPicture();
-            System.out.println(e.getKeyCode());
-        } else if (e.getKeyCode() == 39) {
-            // right
-            nextPicture();
-
-        }
+        // intentionally left blank
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-
-        System.out.println(e.getKeyCode());
+        if (e.getKeyCode() == 37) {
+            // left
+            scrollPic(false);
+        } else if (e.getKeyCode() == 39) {
+            // right
+            scrollPic(true);
+        }
 
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        // intentionally left blank
     }
 
-    private void nextPicture() {
+    /**
+     * Scroll through pictures
+     * @param isNext true for next pic
+     */
+    private void scrollPic(boolean isNext) {
 
-        // figure out what the next picture is
+        // figure out the index of this picture
         List<String> sortedFileNames = SimComparisonTool.dispFrame.getSortedFileNames();
         int i = sortedFileNames.indexOf(SimComparisonTool.sim1.getFileName(SimComparisonTool.position, SimComparisonTool.displayerName, SimComparisonTool.is2D));
-        if (i == sortedFileNames.size() - 1) {
-            i = 0;
+
+        // figure out the index of the picture to scroll to
+        if (isNext) {
+            if (i == sortedFileNames.size() - 1) {
+                i = 0;
+            } else {
+                i++;
+            }
         } else {
-            i += 1;
+            if (i == 0) {
+                i = sortedFileNames.size() - 1;
+            } else {
+                i--;
+            }
         }
 
         // update position
@@ -55,9 +66,8 @@ public class KeyboardScrollListener implements KeyListener {
             SimComparisonTool.position = dotSplit[0];
         }
 
-    }
-
-    private void lastPicture() {
+        // update pictures
+        ((DispPane) SimComparisonTool.dispFrame.getContentPane()).updatePictures();
 
     }
 }
