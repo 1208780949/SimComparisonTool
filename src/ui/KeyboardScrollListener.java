@@ -13,14 +13,18 @@ public class KeyboardScrollListener implements KeyListener {
         if (e.getKeyCode() == 37) {
             // left
             lastPicture();
+            System.out.println(e.getKeyCode());
         } else if (e.getKeyCode() == 39) {
             // right
             nextPicture();
+
         }
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
+
+        System.out.println(e.getKeyCode());
 
     }
 
@@ -31,6 +35,7 @@ public class KeyboardScrollListener implements KeyListener {
 
     private void nextPicture() {
 
+        // figure out what the next picture is
         List<String> sortedFileNames = SimComparisonTool.dispFrame.getSortedFileNames();
         int i = sortedFileNames.indexOf(SimComparisonTool.sim1.getFileName(SimComparisonTool.position, SimComparisonTool.displayerName, SimComparisonTool.is2D));
         if (i == sortedFileNames.size() - 1) {
@@ -39,6 +44,7 @@ public class KeyboardScrollListener implements KeyListener {
             i += 1;
         }
 
+        // update position
         String[] underscoreSplit = sortedFileNames.get(i).split("_");
         if (SimComparisonTool.is2D) {
             // 2D

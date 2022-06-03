@@ -131,14 +131,16 @@ public class DispFrame extends JFrame {
         return view;
     }
 
+    /**
+     * Add key listener to every component so no matter
+     * where the focus it, it will always respond
+     */
     private void addKeyListener() {
         KeyboardScrollListener listener = new KeyboardScrollListener();
-        this.addKeyListener(listener);
-        this.getContentPane().addKeyListener(listener);
-        this.getContentPane().getComponent(0).addKeyListener(listener);
-        this.getContentPane().getComponent(1).addKeyListener(listener);
-        this.getContentPane().getComponent(2).addKeyListener(listener);
-        this.getContentPane().getComponent(3).addKeyListener(listener);
+
+        for (Component c : this.getRootPane().getComponents()) {
+            c.addKeyListener(listener);
+        }
     }
 
     /**
