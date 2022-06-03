@@ -1,5 +1,6 @@
 package ui;
 
+import main.SimComparisonTool;
 import sim.Sim;
 import ui.subpanels.DifferencePanel;
 import ui.subpanels.OverlayPanel;
@@ -15,9 +16,16 @@ import static javax.swing.BorderFactory.createLineBorder;
 
 public class DispPane extends JPanel {
 
+    private SimDisplayPanel simDisplayPanelLeft;
+    private SimDisplayPanel simDisplayPanelRight;
+
     // initialize
 
     public DispPane() {
+
+        this.simDisplayPanelLeft = new SimDisplayPanel(SimComparisonTool.sim1);
+        this.simDisplayPanelRight = new SimDisplayPanel(SimComparisonTool.sim2);
+
         setLayout(new GridLayout(2, 2));
         addPanels();
         addMouseListener(new MouseFocusListener(this));
@@ -28,17 +36,19 @@ public class DispPane extends JPanel {
      */
     private void addPanels() {
 
-        // new sims
-        Sim sim1 = new Sim();
-        Sim sim2 = new Sim();
-
         // add subpanels
-        add(new SimDisplayPanel(sim1));
-        add(new SimDisplayPanel(sim2));
-        add(new DifferencePanel(sim1, sim2));
+        add(simDisplayPanelLeft);
+        add(simDisplayPanelRight);
+        add(new DifferencePanel());
         add(new OverlayPanel());
     }
 
+    /**
+     * Light up the border green if it was not in focus before
+     * and request focus.
+     * If it is already in focus, respond to the click.
+     * @param i panel index
+     */
     public void panelClicked(int i) {
         if (i == -1) {
             getParent().requestFocus();
@@ -50,5 +60,15 @@ public class DispPane extends JPanel {
                 subpanel.requestFocus();
             }
         }
+    }
+
+    // getter
+
+    public SimDisplayPanel getSimDisplayPanelLeft() {
+        return simDisplayPanelLeft;
+    }
+
+    public SimDisplayPanel getSimDisplayPanelRight() {
+        return simDisplayPanelRight;
     }
 }

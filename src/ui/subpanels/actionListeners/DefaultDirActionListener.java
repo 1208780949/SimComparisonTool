@@ -25,6 +25,10 @@ public class DefaultDirActionListener implements ActionListener {
 
         // set default directory
         SimComparisonTool.settingsIO.addSetting(SettingsKeys.DEFAULT_DIRECTORY, defaultDir);
+
+        // update sims
+        SimComparisonTool.sim1.newDefaultDirectory();
+        SimComparisonTool.sim2.newDefaultDirectory();
     }
 
 }

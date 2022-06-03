@@ -33,6 +33,13 @@ public class Subpanel extends JPanel {
     }
 
     /**
+     * Show the picture
+     */
+    public void showPicture() {
+        // intentionally left blank
+    }
+
+    /**
      * Resize the picture
      */
     protected Image imgResize(ImageIcon imageIcon) {

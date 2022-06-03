@@ -1,5 +1,6 @@
 package ui.subpanels;
 
+import main.SimComparisonTool;
 import sim.Sim;
 
 import javax.swing.*;
@@ -8,14 +9,11 @@ import java.awt.image.BufferedImage;
 
 public class DifferencePanel extends Subpanel {
 
-    private final Sim sim1;
-    private final Sim sim2;
+
     private BufferedImage differenceImg;
     private JLabel picture;
 
-    public DifferencePanel(Sim sim1, Sim sim2) {
-        this.sim1 = sim1;
-        this.sim2 = sim2;
+    public DifferencePanel() {
         picture = new JLabel();
         add(picture);
     }
@@ -23,11 +21,16 @@ public class DifferencePanel extends Subpanel {
     @Override
     public void respond() {
 
-        if (sim1.getPicture() != null && sim2.getPicture() != null) {
+    }
+
+    @Override
+    public void showPicture() {
+
+        if (SimComparisonTool.sim1.getPicture() != null && SimComparisonTool.sim2.getPicture() != null) {
 
             // custom grayscale conversion
-            BufferedImage gs1 = customGrayscale(sim1.getPicture());
-            BufferedImage gs2 = customGrayscale(sim2.getPicture());
+            BufferedImage gs1 = customGrayscale(SimComparisonTool.sim1.getPicture());
+            BufferedImage gs2 = customGrayscale(SimComparisonTool.sim2.getPicture());
 
             // if differenceImg is not initialized, initialize it
             if (differenceImg == null) {
@@ -38,8 +41,6 @@ public class DifferencePanel extends Subpanel {
             differenceImg = imageSubtract(gs1, gs2);
             picture.setIcon(new ImageIcon(imgResize(new ImageIcon(differenceImg))));
         }
-
-
     }
 
     /**

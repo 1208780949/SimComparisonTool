@@ -3,9 +3,11 @@ package ui;
 import main.SettingsIO;
 import main.SettingsKeys;
 import main.SimComparisonTool;
+import ui.subpanels.actionListeners.ChangePictureActionListener;
 import ui.subpanels.actionListeners.DefaultDirActionListener;
 
 import javax.swing.*;
+import javax.swing.text.View;
 import java.awt.*;
 import java.io.File;
 import java.util.Set;
@@ -71,18 +73,34 @@ public class DispFrame extends JFrame {
 
         // 2d scenes
         JMenu scenes2DMenu = new JMenu("2D scenes");
-        scenes2DMenu.add(new JMenuItem("Pressure Coefficient"));
-        scenes2DMenu.add(new JMenuItem("Total Pressure Coefficient"));
-        scenes2DMenu.add(new JMenuItem("Velocity Glyph"));
-        scenes2DMenu.add(new JMenuItem("Flow Angularity"));
-        scenes2DMenu.add(new JMenuItem("Vorticity"));
+        JMenuItem cp2d = new JMenuItem("Pressure Coefficient");
+        JMenuItem cpt2d = new JMenuItem("Total Pressure Coefficient");
+        JMenuItem vel2d = new JMenuItem("Velocity Glyph");
+        JMenuItem fa2d = new JMenuItem("Flow Angularity");
+        JMenuItem vorticity2d = new JMenuItem("Vorticity");
+        cp2d.addActionListener(new ChangePictureActionListener(ChangePictureActionListener.Parameter.DISPLAYER, "Pressure", true));
+        cpt2d.addActionListener(new ChangePictureActionListener(ChangePictureActionListener.Parameter.DISPLAYER, "Total Pressure", true));
+        vel2d.addActionListener(new ChangePictureActionListener(ChangePictureActionListener.Parameter.DISPLAYER, "Velocity Glyph", true));
+        fa2d.addActionListener(new ChangePictureActionListener(ChangePictureActionListener.Parameter.DISPLAYER, "Flow Angularity", true));
+        vorticity2d.addActionListener(new ChangePictureActionListener(ChangePictureActionListener.Parameter.DISPLAYER, "Vorticity", true));
+        scenes2DMenu.add(cp2d);
+        scenes2DMenu.add(cpt2d);
+        scenes2DMenu.add(vel2d);
+        scenes2DMenu.add(fa2d);
+        scenes2DMenu.add(vorticity2d);
         view.add(scenes2DMenu);
 
         // 2d views menu
         JMenu viewsMenu = new JMenu("2D views");
-        viewsMenu.add(new JMenuItem("AftFore"));
-        viewsMenu.add(new JMenuItem("Profile"));
-        viewsMenu.add(new JMenuItem("TopBottom"));
+        JMenuItem aftFore = new JMenuItem("AftFore");
+        JMenuItem profile = new JMenuItem("Profile");
+        JMenuItem topBottom = new JMenuItem("TopBottom");
+        aftFore.addActionListener(new ChangePictureActionListener(ChangePictureActionListener.Parameter.VIEW, "AftFore", true));
+        profile.addActionListener(new ChangePictureActionListener(ChangePictureActionListener.Parameter.VIEW, "Profile", true));
+        topBottom.addActionListener(new ChangePictureActionListener(ChangePictureActionListener.Parameter.VIEW, "TopBottom", true));
+        viewsMenu.add(aftFore);
+        viewsMenu.add(profile);
+        viewsMenu.add(topBottom);
         view.add(viewsMenu);
 
         // 2d position menu
@@ -91,8 +109,12 @@ public class DispFrame extends JFrame {
 
         // 3d scenes menu
         JMenu scene3DMenu = new JMenu("3D scenes");
-        scene3DMenu.add(new JMenuItem("Pressure Coefficient"));
-        scene3DMenu.add(new JMenuItem("WSS Flow Separation Indicator"));
+        JMenuItem cp3d = new JMenuItem("Pressure Coefficient");
+        JMenuItem wss3d = new JMenuItem("WSS Flow Separation Indicator");
+        cp3d.addActionListener(new ChangePictureActionListener(ChangePictureActionListener.Parameter.DISPLAYER, "Pressure", false));
+        wss3d.addActionListener(new ChangePictureActionListener(ChangePictureActionListener.Parameter.DISPLAYER, "WSS Separation Indicator", false));
+        scene3DMenu.add(cp3d);
+        scene3DMenu.add(wss3d);
         view.add(scene3DMenu);
 
         view.addSeparator();

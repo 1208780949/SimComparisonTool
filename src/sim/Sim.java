@@ -15,9 +15,14 @@ public class Sim {
     private boolean isValid; // whether this is a valid sim results location or not
     BufferedImage picture;
 
+    // which picture is it
+
+
     public Sim() {
         String defaultDirectory = SimComparisonTool.settingsIO.getSetting(SettingsKeys.DEFAULT_DIRECTORY);
         simDir = defaultDirectory == null ? System.getProperty("user.dir") : defaultDirectory;
+
+
     }
 
     /**
@@ -34,8 +39,30 @@ public class Sim {
         int choice = fc.showOpenDialog(SimComparisonTool.dispFrame);
         if (choice == JFileChooser.APPROVE_OPTION) {
             simDir = fc.getSelectedFile().getPath();
-            checkValidity();
+            isValid = checkValidity();
         }
+
+        // show picture if isValid
+        if (isValid) {
+            showPicture();
+        }
+
+    }
+
+    /**
+     * Called when a new picture needs to be displayed
+     */
+    public void newPicture() {
+
+        // check view
+        // if the view does not exist, go to 000.00
+        File newPic = new File(getFileDirectory());
+        if (!newPic.exists()) {
+            SimComparisonTool.position = "000.00";
+        }
+
+        // show the picture
+        showPicture();
 
     }
 
@@ -43,34 +70,53 @@ public class Sim {
      * Check whether or the folder chosen is a valid sim file location by checking
      * for the existence of 2D scenes and 3D scenes folder
      */
-    private void checkValidity() {
+    private boolean checkValidity() {
 
         File scenes2D = new File(simDir + File.separator + "2D scenes");
         File scenes3D = new File(simDir + File.separator + "3D scenes");
         if (!(scenes2D.exists() && scenes3D.exists())) {
             JOptionPane.showConfirmDialog(null, "Sim chosen is invalid", "Invalid Sim", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
-            isValid = false;
+            return false;
         } else {
-            isValid = true;
-            setDefaultView();
+            return true;
         }
     }
 
     /**
      * Sets the default view. Which is 2D total pressure at 1.6.
      */
-    private void setDefaultView() {
+    private void showPicture() {
 
-        String displayerName = "Total Pressure";
-        String viewName = "TopBottom";
-        String position = "001.60";
         try {
-            String picDir = simDir + File.separator + getFolderDirectory(displayerName, viewName) + File.separator + getFileName(position, displayerName);
-            picture = ImageIO.read(new File(picDir));
+            picture = ImageIO.read(new File(getFileDirectory()));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+    }
+
+    /**
+     * Update default directory if a new one has been set if
+     * and only if no sim is displayed
+     */
+    public void newDefaultDirectory() {
+
+        if (picture == null) {
+            simDir = SimComparisonTool.settingsIO.getSetting(SettingsKeys.DEFAULT_DIRECTORY);
+        }
+
+    }
+
+    /**
+     * Construct the directory of the picture file
+     * @return directory of the picture
+     */
+    public String getFileDirectory() {
+        if (SimComparisonTool.scene.equals("2D")) {
+            return simDir + File.separator + getFolderDirectory(SimComparisonTool.displayerName, SimComparisonTool.viewName) + File.separator + getFileName(SimComparisonTool.position, SimComparisonTool.displayerName);
+        } else {
+            return simDir + File.separator + getFolderDirectory(SimComparisonTool.displayerName) + File.separator + getFileName(SimComparisonTool.displayerName);
+        }
     }
 
     // file name manipulation
