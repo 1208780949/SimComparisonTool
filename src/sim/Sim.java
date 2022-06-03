@@ -18,7 +18,6 @@ public class Sim {
 
     // which picture is it
 
-
     public Sim() {
         String defaultDirectory = SimComparisonTool.settingsIO.getSetting(SettingsKeys.DEFAULT_DIRECTORY);
         simDir = defaultDirectory == null ? System.getProperty("user.dir") : defaultDirectory;
@@ -83,12 +82,15 @@ public class Sim {
     }
 
     /**
-     * Sets the default view. Which is 2D total pressure at 1.6.
+     * Shows picture at location defined in SimComparisonTool.
+     * Also updates the title of dispFrame to give user info
+     * about the pictures.
      */
     private void showPicture() {
 
         try {
             picture = ImageIO.read(new File(getFileDirectory()));
+            SimComparisonTool.dispFrame.setTitle(SimComparisonTool.displayerName + " " + SimComparisonTool.position + " " + SimComparisonTool.viewName);
         } catch (IOException e) {
             e.printStackTrace();
         }
