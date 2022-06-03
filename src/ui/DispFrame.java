@@ -8,8 +8,11 @@ import ui.subpanels.actionListeners.PositionChangeActionListener;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
+import java.util.List;
 
 public class DispFrame extends JFrame {
+
+    private java.util.List<String> sortedFileNames;
 
     public DispFrame() {
         super("fsaeSTAREvo Sim Comparison Tool");
@@ -145,9 +148,9 @@ public class DispFrame extends JFrame {
         String[] positions = new String[files.length];
 
         // sort by file name
-        java.util.List<String> sortedFileNames = Arrays.stream(files).sorted().toList();
+        sortedFileNames = Arrays.stream(files).sorted().toList();
 
-        // extract view
+        // extract position
         for (int i = 0; i < files.length; i++) {
             String[] underscoreSplit = sortedFileNames.get(i).split("_");
             if (SimComparisonTool.is2D) {
@@ -160,8 +163,13 @@ public class DispFrame extends JFrame {
             }
         }
 
-        return  (String) JOptionPane.showInputDialog(this, "Select position: ", "Position Selection", JOptionPane.PLAIN_MESSAGE, null, positions, "000.00");
+        return (String) JOptionPane.showInputDialog(this, "Select position: ", "Position Selection", JOptionPane.PLAIN_MESSAGE, null, positions, "000.00");
 
     }
 
+    // getters
+
+    public List<String> getSortedFileNames() {
+        return sortedFileNames;
+    }
 }
