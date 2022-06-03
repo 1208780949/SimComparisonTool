@@ -1,16 +1,13 @@
 package ui;
 
-import main.SettingsIO;
-import main.SettingsKeys;
 import main.SimComparisonTool;
 import ui.subpanels.actionListeners.ChangePictureActionListener;
 import ui.subpanels.actionListeners.DefaultDirActionListener;
+import ui.subpanels.actionListeners.PositionChangeActionListener;
 
 import javax.swing.*;
-import javax.swing.text.View;
 import java.awt.*;
-import java.io.File;
-import java.util.Set;
+import java.util.Arrays;
 
 public class DispFrame extends JFrame {
 
@@ -104,8 +101,9 @@ public class DispFrame extends JFrame {
         view.add(viewsMenu);
 
         // 2d position menu
-        JMenuItem position = new JMenuItem("Set 2D position");
-        view.add(position);
+        JMenuItem positionMenu = new JMenuItem("Set Position");
+        positionMenu.addActionListener(new PositionChangeActionListener());
+        view.add(positionMenu);
 
         // 3d scenes menu
         JMenu scene3DMenu = new JMenu("3D scenes");
@@ -127,6 +125,43 @@ public class DispFrame extends JFrame {
         view.add(qualityMenu);
 
         return view;
+    }
+
+    /**
+     * Updates the list of possible positions to select from when
+     * displayer or scene is updated
+     * @return new position
+     */
+    public String updatePosition() {
+
+        String[] files = SimComparisonTool.getFilesInDisplayer();
+
+        // don't continue if it's null
+        if (files == null) {
+            return null;
+        }
+
+        // initialize positions array
+        String[] positions = new String[files.length];
+
+        // sort by file name
+        java.util.List<String> sortedFileNames = Arrays.stream(files).sorted().toList();
+
+        // extract view
+        for (int i = 0; i < files.length; i++) {
+            String[] underscoreSplit = sortedFileNames.get(i).split("_");
+            if (SimComparisonTool.is2D) {
+                // 2D
+                positions[i] = underscoreSplit[0];
+            } else {
+                // 3D
+                String[] dotSplit = underscoreSplit[1].split("\\.");
+                positions[i] = dotSplit[0];
+            }
+        }
+
+        return  (String) JOptionPane.showInputDialog(this, "Select position: ", "Position Selection", JOptionPane.PLAIN_MESSAGE, null, positions, "000.00");
+
     }
 
 }

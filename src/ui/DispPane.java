@@ -18,6 +18,8 @@ public class DispPane extends JPanel {
 
     private SimDisplayPanel simDisplayPanelLeft;
     private SimDisplayPanel simDisplayPanelRight;
+    private DifferencePanel differencePanel;
+    private OverlayPanel overlayPanel;
 
     // initialize
 
@@ -25,6 +27,8 @@ public class DispPane extends JPanel {
 
         this.simDisplayPanelLeft = new SimDisplayPanel(SimComparisonTool.sim1);
         this.simDisplayPanelRight = new SimDisplayPanel(SimComparisonTool.sim2);
+        this.differencePanel = new DifferencePanel();
+        this.overlayPanel = new OverlayPanel();
 
         setLayout(new GridLayout(2, 2));
         addPanels();
@@ -39,8 +43,8 @@ public class DispPane extends JPanel {
         // add subpanels
         add(simDisplayPanelLeft);
         add(simDisplayPanelRight);
-        add(new DifferencePanel());
-        add(new OverlayPanel());
+        add(differencePanel);
+        add(overlayPanel);
     }
 
     /**
@@ -62,13 +66,14 @@ public class DispPane extends JPanel {
         }
     }
 
-    // getter
-
-    public SimDisplayPanel getSimDisplayPanelLeft() {
-        return simDisplayPanelLeft;
+    /**
+     * Updates all four pictures
+     */
+    public void updatePictures() {
+        simDisplayPanelLeft.updatePicture();
+        simDisplayPanelRight.updatePicture();
+        differencePanel.showPicture();
+        overlayPanel.showPicture();
     }
 
-    public SimDisplayPanel getSimDisplayPanelRight() {
-        return simDisplayPanelRight;
-    }
 }

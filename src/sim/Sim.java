@@ -14,6 +14,7 @@ public class Sim {
     private String simDir;
     private boolean isValid; // whether this is a valid sim results location or not
     BufferedImage picture;
+    JFileChooser fc; // I'm initializing this in constructor because JFileChooser is extremely slow to initialize
 
     // which picture is it
 
@@ -21,7 +22,7 @@ public class Sim {
     public Sim() {
         String defaultDirectory = SimComparisonTool.settingsIO.getSetting(SettingsKeys.DEFAULT_DIRECTORY);
         simDir = defaultDirectory == null ? System.getProperty("user.dir") : defaultDirectory;
-
+        fc = new JFileChooser(simDir);
 
     }
 
@@ -34,7 +35,6 @@ public class Sim {
     public void newSim() {
 
         // show file browser
-        JFileChooser fc = new JFileChooser(simDir);
         fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int choice = fc.showOpenDialog(SimComparisonTool.dispFrame);
         if (choice == JFileChooser.APPROVE_OPTION) {
@@ -112,33 +112,27 @@ public class Sim {
      * @return directory of the picture
      */
     public String getFileDirectory() {
-        if (SimComparisonTool.scene.equals("2D")) {
-            return simDir + File.separator + getFolderDirectory(SimComparisonTool.displayerName, SimComparisonTool.viewName) + File.separator + getFileName(SimComparisonTool.position, SimComparisonTool.displayerName);
+        if (SimComparisonTool.is2D) {
+            return simDir + File.separator + getFolderDirectory(SimComparisonTool.displayerName, SimComparisonTool.viewName) + File.separator + getFileName(SimComparisonTool.position, SimComparisonTool.displayerName, true);
         } else {
-            return simDir + File.separator + getFolderDirectory(SimComparisonTool.displayerName) + File.separator + getFileName(SimComparisonTool.displayerName);
+            return simDir + File.separator + getFolderDirectory(SimComparisonTool.displayerName) + File.separator + getFileName(SimComparisonTool.position, SimComparisonTool.displayerName, false);
         }
     }
 
     // file name manipulation
 
     /**
-     * 2D version of getFileName.
+     * 2D and 3D integrated version of getFileName.
      * @param displayerName name of the displayer in STAR
      * @return file name
      */
-    private String getFileName(String position, String displayerName) {
-        return position + "_" + displayerName + ".png";
-    }
+    public String getFileName(String position, String displayerName, boolean is2D) {
+        if (is2D) {
+            return position + "_" + displayerName + ".png";
+        } else {
+            return displayerName + "_" + position + ".png";
+        }
 
-    /**
-     * 3D version of getFileName.
-     * This will always return the name of the 3D FW Back scene
-     * because the user is only allowed to scroll through 3D scenes.
-     * @param displayerName name of the displayer in STAR
-     * @return file name
-     */
-    private String getFileName(String displayerName) {
-        return displayerName + "_[3D] [FW] Back.png";
     }
 
     /**
@@ -148,7 +142,7 @@ public class Sim {
      * @param viewName view name
      * @return folder subdirectory
      */
-    private String getFolderDirectory(String displayerName, String viewName) {
+    public String getFolderDirectory(String displayerName, String viewName) {
         return "2D scenes" + File.separator + displayerName + " [2D] [" + viewName + "] Car";
     }
 
@@ -158,7 +152,7 @@ public class Sim {
      * @param displayerName displayer name
      * @return folder subdirectory
      */
-    private String getFolderDirectory(String displayerName) {
+    public String getFolderDirectory(String displayerName) {
         return "3D scenes" + File.separator + displayerName;
     }
 
@@ -170,5 +164,9 @@ public class Sim {
 
     public BufferedImage getPicture(){
         return picture;
+    }
+
+    public String getSimDir() {
+        return simDir;
     }
 }

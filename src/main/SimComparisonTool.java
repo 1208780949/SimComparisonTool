@@ -3,6 +3,8 @@ package main;
 import sim.Sim;
 import ui.DispFrame;
 
+import java.io.File;
+
 public class SimComparisonTool {
 
     public static DispFrame dispFrame;
@@ -15,7 +17,7 @@ public class SimComparisonTool {
     public static String displayerName;
     public static String viewName;
     public static String position;
-    public static String scene;
+    public static boolean is2D;
 
     public static void main(String[] args) {
 
@@ -23,7 +25,7 @@ public class SimComparisonTool {
         displayerName = "Total Pressure";
         viewName = "TopBottom";
         position = "001.60";
-        scene = "2D";
+        is2D = true;
 
         // initialize settings
         settingsIO = new SettingsIO();
@@ -34,6 +36,32 @@ public class SimComparisonTool {
 
         // initialize display frame
         dispFrame = new DispFrame();
+
+    }
+
+    /**
+     * Get all files names in a displayer. If the directory does
+     * not exist, return null.
+     * @return directories all files
+     */
+    public static String[] getFilesInDisplayer() {
+
+        // using sim1
+
+        // 2D case
+        File displayerDir;
+        if (SimComparisonTool.is2D) {
+            displayerDir = new File(sim1.getSimDir() + File.separator + sim1.getFolderDirectory(SimComparisonTool.displayerName, SimComparisonTool.viewName));
+        } else {
+            // 3D
+            displayerDir = new File(sim1.getSimDir() + File.separator + sim1.getFolderDirectory(SimComparisonTool.displayerName));
+        }
+        if (displayerDir.exists()) {
+            return displayerDir.list();
+        } else {
+            return null;
+        }
+
 
     }
 

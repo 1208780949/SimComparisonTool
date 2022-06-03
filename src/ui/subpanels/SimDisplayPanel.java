@@ -38,7 +38,5 @@ public class SimDisplayPanel extends Subpanel {
     public void updatePicture() {
         sim.newPicture();
         showPicture();
-        ((Subpanel) getParent().getComponent(2)).showPicture();
-        ((Subpanel) getParent().getComponent(3)).showPicture();
     }
 }

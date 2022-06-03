@@ -2,6 +2,7 @@ package ui.subpanels.actionListeners;
 
 import main.SimComparisonTool;
 import ui.DispPane;
+import ui.subpanels.Subpanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,14 +26,15 @@ public record ChangePictureActionListener(Parameter change, String newValue, boo
         }
 
         // make sure scenes is good
-        String scene = is2D ? "2D" : "3D";
-        if (!SimComparisonTool.scene.equals(scene)) {
-            SimComparisonTool.scene = scene;
+        if (SimComparisonTool.is2D && !is2D) {
+            SimComparisonTool.position = "[3D] [FW] Back";
+        } else if (!SimComparisonTool.is2D && is2D) {
+            SimComparisonTool.position = "000.00";
         }
+        SimComparisonTool.is2D = is2D;
 
         // display new picture
-        ((DispPane) SimComparisonTool.dispFrame.getContentPane()).getSimDisplayPanelLeft().updatePicture();
-        ((DispPane) SimComparisonTool.dispFrame.getContentPane()).getSimDisplayPanelRight().updatePicture();
+        ((DispPane) SimComparisonTool.dispFrame.getContentPane()).updatePictures();
 
     }
 
