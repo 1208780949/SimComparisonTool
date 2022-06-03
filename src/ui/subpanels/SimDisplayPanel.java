@@ -3,7 +3,6 @@ package ui.subpanels;
 import sim.Sim;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class SimDisplayPanel extends Subpanel {
 

@@ -9,17 +9,15 @@ import ui.subpanels.Subpanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-
-import static javax.swing.BorderFactory.createLineBorder;
 
 public class DispPane extends JPanel {
 
-    private SimDisplayPanel simDisplayPanelLeft;
-    private SimDisplayPanel simDisplayPanelRight;
-    private DifferencePanel differencePanel;
-    private OverlayPanel overlayPanel;
+    private final SimDisplayPanel simDisplayPanelLeft;
+    private final SimDisplayPanel simDisplayPanelRight;
+    private final DifferencePanel differencePanel;
+    private final OverlayPanel overlayPanel;
+
+    private int imageQuality = Image.SCALE_FAST;
 
     // initialize
 
@@ -76,9 +74,20 @@ public class DispPane extends JPanel {
         overlayPanel.showPicture();
     }
 
+    // setters
+
+    public void setImageQuality(int imageQuality) {
+        this.imageQuality = imageQuality;
+    }
+
+
     // getters
 
     public DifferencePanel getDifferencePanel() {
         return differencePanel;
+    }
+
+    public int getImageQuality() {
+        return imageQuality;
     }
 }

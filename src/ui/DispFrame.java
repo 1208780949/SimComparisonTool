@@ -125,10 +125,16 @@ public class DispFrame extends JFrame {
         view.addSeparator();
 
         // image quality menu
-        JMenu qualityMenu = new JMenu("Image Quality (WIP)");
-        qualityMenu.add(new JMenuItem("High"));
-        qualityMenu.add(new JMenuItem("Medium"));
-        qualityMenu.add(new JMenuItem("Low (Default)"));
+        JMenu qualityMenu = new JMenu("Image Quality");
+        JMenuItem highQuality = new JMenuItem("High");
+        JMenuItem mediumQuality = new JMenuItem("Medium");
+        JMenuItem lowQuality = new JMenuItem("Low (Default)");
+        highQuality.addActionListener(e -> ((DispPane) SimComparisonTool.dispFrame.getContentPane()).setImageQuality(Image.SCALE_SMOOTH));
+        mediumQuality.addActionListener(e -> ((DispPane) SimComparisonTool.dispFrame.getContentPane()).setImageQuality(Image.SCALE_DEFAULT));
+        lowQuality.addActionListener(e -> ((DispPane) SimComparisonTool.dispFrame.getContentPane()).setImageQuality(Image.SCALE_FAST));
+        qualityMenu.add(highQuality);
+        qualityMenu.add(mediumQuality);
+        qualityMenu.add(lowQuality);
         view.add(qualityMenu);
 
         return view;

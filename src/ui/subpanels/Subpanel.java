@@ -1,5 +1,7 @@
 package ui.subpanels;
 
+import ui.DispPane;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
@@ -60,7 +62,7 @@ public class Subpanel extends JPanel {
         int newImgHeight = (int) Math.round(imgHeight / rescaleRatio);
 
         // rescale image
-        return imageIcon.getImage().getScaledInstance(newImgWidth, newImgHeight, Image.SCALE_FAST);
+        return imageIcon.getImage().getScaledInstance(newImgWidth, newImgHeight, ((DispPane) this.getParent()).getImageQuality());
 
     }
 
