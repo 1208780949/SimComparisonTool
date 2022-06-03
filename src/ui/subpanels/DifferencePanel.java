@@ -1,7 +1,7 @@
 package ui.subpanels;
 
+import main.SettingsKeys;
 import main.SimComparisonTool;
-import sim.Sim;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,21 +12,30 @@ public class DifferencePanel extends Subpanel {
 
     private BufferedImage differenceImg;
     private JLabel picture;
+    private boolean autoUpdate;
 
     public DifferencePanel() {
         picture = new JLabel();
         picture.setHorizontalAlignment(JLabel.CENTER);
         picture.setVerticalAlignment(JLabel.CENTER);
+
+        // auto update
+        autoUpdate = SimComparisonTool.settingsIO.getBoolSetting(SettingsKeys.DIFFERENCE_PANE_AUTO_UPDATE);
+
         add(picture);
     }
 
     @Override
     public void respond() {
-
+        showPicture(true);
     }
 
-    @Override
-    public void showPicture() {
+    public void showPicture(boolean forceUpdate) {
+
+        // if the user is not forcing an update and auto update is not on, don't update
+        if (!autoUpdate && !forceUpdate) {
+            return;
+        }
 
         if (SimComparisonTool.sim1.getPicture() != null && SimComparisonTool.sim2.getPicture() != null) {
 
@@ -160,4 +169,9 @@ public class DifferencePanel extends Subpanel {
 
     }
 
+    // settings
+
+    public void setAutoUpdate(boolean autoUpdate) {
+        this.autoUpdate = autoUpdate;
+    }
 }

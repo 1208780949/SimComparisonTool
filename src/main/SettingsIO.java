@@ -126,5 +126,11 @@ public class SettingsIO {
 
     }
 
+    /**
+     * Get the setting if it is a boolean
+     */
+    public boolean getBoolSetting(SettingsKeys key) {
+        return Boolean.parseBoolean(getSetting(key));
+    }
 
 }

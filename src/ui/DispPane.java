@@ -72,8 +72,13 @@ public class DispPane extends JPanel {
     public void updatePictures() {
         simDisplayPanelLeft.updatePicture();
         simDisplayPanelRight.updatePicture();
-        differencePanel.showPicture();
+        differencePanel.showPicture(false);
         overlayPanel.showPicture();
     }
 
+    // getters
+
+    public DifferencePanel getDifferencePanel() {
+        return differencePanel;
+    }
 }

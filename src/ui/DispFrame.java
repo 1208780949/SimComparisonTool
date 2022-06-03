@@ -3,6 +3,7 @@ package ui;
 import main.SimComparisonTool;
 import ui.subpanels.actionListeners.ChangePictureActionListener;
 import ui.subpanels.actionListeners.DefaultDirActionListener;
+import ui.subpanels.actionListeners.DifferencePaneDefaultAutoUpdateListener;
 import ui.subpanels.actionListeners.PositionChangeActionListener;
 
 import javax.swing.*;
@@ -39,6 +40,7 @@ public class DispFrame extends JFrame {
         // add menus
         menuBar.add(initFileMenu());
         menuBar.add(initViewMenu());
+        menuBar.add(initDifferenceMenu());
 
         // add menu bar to ui.DispFrame
         setJMenuBar(menuBar);
@@ -123,13 +125,49 @@ public class DispFrame extends JFrame {
         view.addSeparator();
 
         // image quality menu
-        JMenu qualityMenu = new JMenu("Image Quality");
+        JMenu qualityMenu = new JMenu("Image Quality (WIP)");
         qualityMenu.add(new JMenuItem("High"));
         qualityMenu.add(new JMenuItem("Medium"));
         qualityMenu.add(new JMenuItem("Low (Default)"));
         view.add(qualityMenu);
 
         return view;
+    }
+
+    /**
+     * Create menu for difference pane
+     * @return difference menu
+     */
+    private JMenu initDifferenceMenu() {
+
+        JMenu difference = new JMenu("Difference Pane");
+
+        JMenuItem setDeadZone = new JMenuItem("Set Dead Zone (WIP)");
+        difference.add(setDeadZone);
+
+        difference.addSeparator();
+
+        JMenuItem autoUpdateOn = new JMenuItem("Auto Update On");
+        autoUpdateOn.addActionListener(e -> ((DispPane) getContentPane()).getDifferencePanel().setAutoUpdate(true));
+        difference.add(autoUpdateOn);
+
+        JMenuItem autoUpdateOff = new JMenuItem("Auto Update Off");
+        autoUpdateOff.addActionListener(e -> ((DispPane) getContentPane()).getDifferencePanel().setAutoUpdate(false));
+        difference.add(autoUpdateOff);
+
+        JMenuItem autoUpdateDefault = new JMenuItem("Set Default Auto Update");
+        autoUpdateDefault.addActionListener(new DifferencePaneDefaultAutoUpdateListener());
+        difference.add(autoUpdateDefault);
+
+        difference.addSeparator();
+
+        JMenuItem highAccuracy = new JMenuItem("High Accuracy (WIP)");
+        difference.add(highAccuracy);
+
+        JMenuItem lowAccuracy = new JMenuItem("Low Accuracy (default) (WIP)");
+        difference.add(lowAccuracy);
+
+        return difference;
     }
 
     /**
