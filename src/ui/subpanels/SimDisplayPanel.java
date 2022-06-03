@@ -14,6 +14,8 @@ public class SimDisplayPanel extends Subpanel {
 
         this.sim = sim;
         picture = new JLabel();
+        picture.setHorizontalAlignment(JLabel.CENTER);
+        picture.setVerticalAlignment(JLabel.CENTER);
         add(picture);
 
     }
