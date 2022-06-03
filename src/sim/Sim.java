@@ -1,5 +1,6 @@
 package sim;
 
+import main.SettingsKeys;
 import main.SimComparisonTool;
 
 import javax.imageio.ImageIO;
@@ -15,7 +16,8 @@ public class Sim {
     BufferedImage picture;
 
     public Sim() {
-        simDir = System.getProperty("user.dir");
+        String defaultDirectory = SimComparisonTool.settingsIO.getSetting(SettingsKeys.DEFAULT_DIRECTORY);
+        simDir = defaultDirectory == null ? System.getProperty("user.dir") : defaultDirectory;
     }
 
     /**
