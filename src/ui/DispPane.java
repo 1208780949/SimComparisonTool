@@ -71,7 +71,7 @@ public class DispPane extends JPanel {
         simDisplayPanelLeft.updatePicture();
         simDisplayPanelRight.updatePicture();
         differencePanel.showPicture(false);
-        overlayPanel.showPicture();
+        overlayPanel.showPicture(false);
     }
 
     // setters
@@ -89,5 +89,9 @@ public class DispPane extends JPanel {
 
     public int getImageQuality() {
         return imageQuality;
+    }
+
+    public OverlayPanel getOverlayPanel() {
+        return overlayPanel;
     }
 }

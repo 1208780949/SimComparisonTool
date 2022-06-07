@@ -11,7 +11,6 @@ public class DifferencePaneDefaultAutoUpdateListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        String[] opts = {"true", "false"};
         int choice = JOptionPane.showConfirmDialog(
             SimComparisonTool.dispFrame,
             "Do you want to turn on auto update for difference pane by default?",

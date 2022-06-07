@@ -1,10 +1,7 @@
 package ui;
 
 import main.SimComparisonTool;
-import ui.subpanels.actionListeners.ChangePictureActionListener;
-import ui.subpanels.actionListeners.DefaultDirActionListener;
-import ui.subpanels.actionListeners.DifferencePaneDefaultAutoUpdateListener;
-import ui.subpanels.actionListeners.PositionChangeActionListener;
+import ui.subpanels.actionListeners.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,6 +38,7 @@ public class DispFrame extends JFrame {
         menuBar.add(initFileMenu());
         menuBar.add(initViewMenu());
         menuBar.add(initDifferenceMenu());
+        menuBar.add(initOverlayMenu());
 
         // add menu bar to ui.DispFrame
         setJMenuBar(menuBar);
@@ -174,6 +172,34 @@ public class DispFrame extends JFrame {
         difference.add(lowAccuracy);
 
         return difference;
+    }
+
+    /**
+     * Create menu for overlay pane
+     * @return overlay menu
+     */
+    private JMenu initOverlayMenu() {
+        JMenu overlay = new JMenu("Overlay Pane");
+
+        JMenuItem setAlpha = new JMenuItem("Set Transparency");
+        setAlpha.addActionListener(new SetAlphaListener());
+        overlay.add(setAlpha);
+
+        overlay.addSeparator();
+
+        JMenuItem autoUpdateOn = new JMenuItem("Auto Update On");
+        autoUpdateOn.addActionListener(e -> ((DispPane) getContentPane()).getOverlayPanel().setAutoUpdate(true));
+        overlay.add(autoUpdateOn);
+
+        JMenuItem autoUpdateOff = new JMenuItem("Auto Update Off");
+        autoUpdateOff.addActionListener(e -> ((DispPane) getContentPane()).getOverlayPanel().setAutoUpdate(false));
+        overlay.add(autoUpdateOff);
+
+        JMenuItem autoUpdateDefault = new JMenuItem("Set Default Auto Update");
+        autoUpdateDefault.addActionListener(new OverlayPaneDefaultAutoUpdateListener());
+        overlay.add(autoUpdateDefault);
+
+        return overlay;
     }
 
     /**
