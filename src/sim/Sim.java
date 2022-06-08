@@ -14,6 +14,7 @@ public class Sim {
     private String simDir;
     private boolean isValid; // whether this is a valid sim results location or not
     BufferedImage picture;
+    BufferedImage resizedCopy;
     JFileChooser fc; // I'm initializing this in constructor because JFileChooser is extremely slow to initialize
 
     // which picture is it
@@ -158,6 +159,13 @@ public class Sim {
         return "3D scenes" + File.separator + displayerName;
     }
 
+    // setters
+
+    public void setResizedCopy(BufferedImage resizedCopy) {
+        this.resizedCopy = resizedCopy;
+    }
+
+
     // getter
 
     public boolean isValid() {
@@ -170,5 +178,9 @@ public class Sim {
 
     public String getSimDir() {
         return simDir;
+    }
+
+    public BufferedImage getResizedCopy() {
+        return resizedCopy;
     }
 }

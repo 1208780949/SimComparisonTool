@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.image.BufferedImage;
 
 import static javax.swing.BorderFactory.createLineBorder;
 
@@ -41,14 +42,10 @@ public class Subpanel extends JPanel {
         // intentionally left blank
     }
 
-    /**
-     * Resize the picture
-     */
-    protected Image imgResize(ImageIcon imageIcon) {
-
+    protected BufferedImage imgResize(BufferedImage img) {
         // get image size
-        double imgWidth = imageIcon.getIconWidth();
-        double imgHeight = imageIcon.getIconHeight();
+        double imgWidth = img.getWidth();
+        double imgHeight = img.getHeight();
 
         // calculate the ratio of image size and panel size
         double widthRatio = imgWidth / getWidth();
@@ -62,8 +59,9 @@ public class Subpanel extends JPanel {
         int newImgHeight = (int) Math.round(imgHeight / rescaleRatio);
 
         // rescale image
-        return imageIcon.getImage().getScaledInstance(newImgWidth, newImgHeight, ((DispPane) this.getParent()).getImageQuality());
-
+        BufferedImage result = new BufferedImage(newImgWidth, newImgHeight, BufferedImage.TYPE_INT_RGB);
+        result.getGraphics().drawImage(img.getScaledInstance(newImgWidth, newImgHeight, ((DispPane) this.getParent()).getImageQuality()), 0, 0, null);
+        return result;
     }
 
 }

@@ -37,19 +37,30 @@ public class OverlayPanel extends Subpanel {
             return;
         }
 
-        if (SimComparisonTool.sim1.getPicture() != null && SimComparisonTool.sim2.getPicture() != null) {
+        // images
+        BufferedImage sim1Pic = SimComparisonTool.sim1.getResizedCopy();
+        BufferedImage sim2Pic = SimComparisonTool.sim2.getResizedCopy();
+
+        if (sim1Pic != null && sim2Pic != null) {
 
             // if differenceImg is not initialized, initialize it
             if (overlayImg == null) {
-                overlayImg = new BufferedImage(SimComparisonTool.sim1.getPicture().getWidth(), SimComparisonTool.sim1.getPicture().getHeight(), BufferedImage.TYPE_INT_RGB);
+                overlayImg = new BufferedImage(sim1Pic.getWidth(), sim2Pic.getHeight(), BufferedImage.TYPE_INT_RGB);
             }
+            overlayImg = alphaChannelBlending(sim1Pic, sim2Pic);
 
             // calculate and display difference
-            picture.setIcon(new ImageIcon(imgResize(new ImageIcon(alphaChannelBlending(SimComparisonTool.sim1.getPicture(), SimComparisonTool.sim2.getPicture())))));
+            picture.setIcon(new ImageIcon(overlayImg));
         }
 
     }
 
+    /**
+     * Overlay the two images on top of each other
+     * @param img1 sim1 BufferedImage
+     * @param img2 sim2 BufferedImage
+     * @return blended BufferedImage
+     */
     private BufferedImage alphaChannelBlending(BufferedImage img1, BufferedImage img2) {
 
         // get size

@@ -6,6 +6,7 @@ import main.SimComparisonTool;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.nio.Buffer;
 
 public class DifferencePanel extends Subpanel {
 
@@ -37,11 +38,15 @@ public class DifferencePanel extends Subpanel {
             return;
         }
 
-        if (SimComparisonTool.sim1.getPicture() != null && SimComparisonTool.sim2.getPicture() != null) {
+        // images
+        BufferedImage sim1Pic = SimComparisonTool.sim1.getResizedCopy();
+        BufferedImage sim2Pic = SimComparisonTool.sim2.getResizedCopy();
+
+        if (sim1Pic != null && sim2Pic != null) {
 
             // custom grayscale conversion
-            BufferedImage gs1 = customGrayscale(SimComparisonTool.sim1.getPicture());
-            BufferedImage gs2 = customGrayscale(SimComparisonTool.sim2.getPicture());
+            BufferedImage gs1 = customGrayscale(sim1Pic);
+            BufferedImage gs2 = customGrayscale(sim2Pic);
 
             // if differenceImg is not initialized, initialize it
             if (differenceImg == null) {
@@ -50,7 +55,7 @@ public class DifferencePanel extends Subpanel {
 
             // calculate and display difference
             differenceImg = imageSubtract(gs1, gs2);
-            picture.setIcon(new ImageIcon(imgResize(new ImageIcon(differenceImg))));
+            picture.setIcon(new ImageIcon(differenceImg));
         }
     }
 

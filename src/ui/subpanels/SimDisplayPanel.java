@@ -31,7 +31,9 @@ public class SimDisplayPanel extends Subpanel {
 
     @Override
     public void showPicture() {
-        picture.setIcon(new ImageIcon(imgResize(new ImageIcon(sim.getPicture()))));
+
+        sim.setResizedCopy(imgResize(sim.getPicture()));
+        picture.setIcon(new ImageIcon(sim.getResizedCopy()));
     }
 
     public void updatePicture() {
