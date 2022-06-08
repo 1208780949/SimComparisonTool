@@ -66,7 +66,16 @@ public class KeyboardScrollListener implements KeyListener {
             SimComparisonTool.position = underscoreSplit[0];
         } else {
             // 3D
-            String[] dotSplit = underscoreSplit[1].split("\\.");
+            // since some 3D scenes have 2 underscores and some have 1,
+            // the program needs to check that and get the correct split
+            String correctedSplit;
+            if (underscoreSplit.length == 3) {
+                correctedSplit = underscoreSplit[1] + "_" + underscoreSplit[2];
+            } else {
+                correctedSplit = underscoreSplit[1];
+            }
+
+            String[] dotSplit = correctedSplit.split("\\.");
             SimComparisonTool.position = dotSplit[0];
         }
 
