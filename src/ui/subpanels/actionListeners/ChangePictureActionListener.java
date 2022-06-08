@@ -1,6 +1,7 @@
 package ui.subpanels.actionListeners;
 
 import main.SimComparisonTool;
+import sim.Sim;
 import ui.DispPane;
 import ui.subpanels.Subpanel;
 
@@ -25,13 +26,21 @@ public record ChangePictureActionListener(Parameter change, String newValue, boo
             case POSITION -> SimComparisonTool.position = newValue;
         }
 
-        // make sure scenes is good
+        // make sure position is good when switching scenes
+        // make sure the files in the new folder are sorted when switching scenes
         if (SimComparisonTool.is2D && !is2D) {
             SimComparisonTool.position = "[3D] [FW] Back";
+            SimComparisonTool.dispFrame.getSortedFileNames(true);
         } else if (!SimComparisonTool.is2D && is2D) {
             SimComparisonTool.position = "000.00";
+            SimComparisonTool.dispFrame.getSortedFileNames(true);
         }
         SimComparisonTool.is2D = is2D;
+
+        // make sure the files in the new folder are sorted when switching displayer or view
+        if (change.equals(Parameter.DISPLAYER) || change.equals(Parameter.VIEW)) {
+            SimComparisonTool.dispFrame.getSortedFileNames(true);
+        }
 
         // display new picture
         ((DispPane) SimComparisonTool.dispFrame.getContentPane()).updatePictures();

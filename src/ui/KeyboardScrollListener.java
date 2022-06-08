@@ -37,8 +37,12 @@ public class KeyboardScrollListener implements KeyListener {
     private void scrollPic(boolean isNext) {
 
         // figure out the index of this picture
-        List<String> sortedFileNames = SimComparisonTool.dispFrame.getSortedFileNames();
+        List<String> sortedFileNames = SimComparisonTool.dispFrame.getSortedFileNames(false);
         int i = sortedFileNames.indexOf(SimComparisonTool.sim1.getFileName(SimComparisonTool.position, SimComparisonTool.displayerName, SimComparisonTool.is2D));
+        if (i == -1) {
+            // if the file can't be found, default to first picture
+            i = 0;
+        }
 
         // figure out the index of the picture to scroll to
         if (isNext) {

@@ -284,10 +284,10 @@ public class DispFrame extends JFrame {
 
     // getters
 
-    public List<String> getSortedFileNames() {
+    public List<String> getSortedFileNames(boolean folderChanged) {
 
         // if sorted file names does not exist, create it
-        if (sortedFileNames == null) {
+        if (sortedFileNames == null || folderChanged) {
             sortFileNames(SimComparisonTool.getFilesInDisplayer());
         }
         return sortedFileNames;
