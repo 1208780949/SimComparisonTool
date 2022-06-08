@@ -109,4 +109,10 @@ public class OverlayPanel extends Subpanel {
     public void setAlpha(float alpha) {
         this.alpha = alpha;
     }
+
+    // getters
+
+    public float getAlpha() {
+        return alpha;
+    }
 }

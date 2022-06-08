@@ -22,7 +22,8 @@ public class SetAlphaListener implements ActionListener {
         alphaSetFrame.getContentPane().add(new JLabel("Set Transparency: "));
 
         // slider
-        JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 100, 50);
+        int currentAlpha = (int) (((DispPane) SimComparisonTool.dispFrame.getContentPane()).getOverlayPanel().getAlpha() * 100);
+        JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 100, currentAlpha);
         slider.setMajorTickSpacing(25);
         slider.setMinorTickSpacing(5);
         slider.setPaintTicks(true);
