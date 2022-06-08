@@ -105,7 +105,7 @@ public class DispFrame extends JFrame {
         viewsMenu.add(topBottom);
         view.add(viewsMenu);
 
-        // 2d position menu
+        // position menu
         JMenuItem positionMenu = new JMenuItem("Set Position");
         positionMenu.addActionListener(new PositionChangeActionListener());
         view.add(positionMenu);
@@ -260,7 +260,16 @@ public class DispFrame extends JFrame {
                 positions[i] = underscoreSplit[0];
             } else {
                 // 3D
-                String[] dotSplit = underscoreSplit[1].split("\\.");
+                // since some 3D scenes have 2 underscores and some have 1,
+                // the program needs to check that and get the correct split
+                String correctedSplit;
+                if (underscoreSplit.length == 3) {
+                    correctedSplit = underscoreSplit[1] + "_" + underscoreSplit[2];
+                } else {
+                    correctedSplit = underscoreSplit[1];
+                }
+
+                String[] dotSplit = correctedSplit.split("\\.");
                 positions[i] = dotSplit[0];
             }
         }
