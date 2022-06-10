@@ -291,6 +291,20 @@ public class DispFrame extends JFrame {
         sortedFileNames = Arrays.stream(files).sorted().toList();
     }
 
+    // settes
+
+    @Override
+    public void setTitle(String title) {
+        String sim1Name = SimComparisonTool.sim1.getSimName();
+        String sim2Name = SimComparisonTool.sim2.getSimName();
+        super.setTitle(title);
+        if (sim1Name != null && sim2Name != null) {
+            super.setTitle(super.getTitle() + " | " + SimComparisonTool.sim1.getSimName() + " | " + SimComparisonTool.sim2.getSimName());
+        }
+
+    }
+
+
     // getters
 
     public List<String> getSortedFileNames(boolean folderChanged) {

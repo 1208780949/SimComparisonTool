@@ -12,6 +12,7 @@ import java.io.IOException;
 public class Sim {
 
     private String simDir;
+    private String simName;
     private boolean isValid; // whether this is a valid sim results location or not
     BufferedImage picture;
     BufferedImage resizedCopy;
@@ -44,6 +45,8 @@ public class Sim {
 
         // show picture if isValid
         if (isValid) {
+            String[] simDirFolders = simDir.split("\\\\"); // 4 backslashes are necessary
+            simName = simDirFolders[simDirFolders.length - 1];
             showPicture();
         }
 
@@ -182,5 +185,9 @@ public class Sim {
 
     public BufferedImage getResizedCopy() {
         return resizedCopy;
+    }
+
+    public String getSimName() {
+        return simName;
     }
 }
