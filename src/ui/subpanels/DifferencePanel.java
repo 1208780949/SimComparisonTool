@@ -10,14 +10,16 @@ import java.awt.image.BufferedImage;
 
 public class DifferencePanel extends Subpanel {
 
-    private Colormap colormap;
+    private final Colormap colormap;
     private BufferedImage differenceImg;
     private boolean autoUpdate;
+    private boolean isAccurate;
 
     public DifferencePanel() {
         super();
         autoUpdate = SimComparisonTool.settingsIO.getBoolSetting(SettingsKeys.DIFFERENCE_PANE_AUTO_UPDATE);
         colormap = new Colormap();
+        isAccurate = false;
     }
 
     @Override
@@ -39,8 +41,15 @@ public class DifferencePanel extends Subpanel {
         if (sim1Pic != null && sim2Pic != null) {
 
             // custom grayscale conversion
-            BufferedImage gs1 = customGrayscaleAccurate(sim1Pic);
-            BufferedImage gs2 = customGrayscaleAccurate(sim2Pic);
+            BufferedImage gs1;
+            BufferedImage gs2;
+            if (isAccurate) {
+                gs1 = customGrayscaleAccurate(sim1Pic);
+                gs2 = customGrayscaleAccurate(sim2Pic);
+            } else {
+                gs1 = customGrayscaleQuick(sim1Pic);
+                gs2 = customGrayscaleQuick(sim2Pic);
+            }
 
             // if differenceImg is not initialized, initialize it
             if (differenceImg == null) {
@@ -139,6 +148,14 @@ public class DifferencePanel extends Subpanel {
 
     }
 
+    /**
+     * This version of grayscale conversion directly uses
+     * the colormap number. Due to the number of comparisons
+     * needed, this is slower. But this is as accurate as it
+     * gets.
+     * @param img image
+     * @return custom grayscale
+     */
     private BufferedImage customGrayscaleAccurate(BufferedImage img) {
 
         // get size of picture
@@ -154,7 +171,7 @@ public class DifferencePanel extends Subpanel {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 color = img.getRaster().getPixel(i, j, new int[3]);
-                int grayscale = colormap.determinePos(0, color[1] / 255.0, 0);
+                int grayscale = colormap.determinePos(color[0] / 255.0, color[1] / 255.0, color[2] / 255.0);
                 pixel = new Color(grayscale, grayscale ,grayscale);
                 newImg.setRGB(i, j, pixel.getRGB());
             }
@@ -196,5 +213,13 @@ public class DifferencePanel extends Subpanel {
 
     public void setAutoUpdate(boolean autoUpdate) {
         this.autoUpdate = autoUpdate;
+    }
+
+    public void setAccurate(boolean isAccurate) {
+        // update if accuracy changed
+        if (this.isAccurate != isAccurate) {
+            this.isAccurate = isAccurate;
+            this.respond();
+        }
     }
 }

@@ -182,10 +182,12 @@ public class DispFrame extends JFrame {
 
         difference.addSeparator();
 
-        JMenuItem highAccuracy = new JMenuItem("High Accuracy (WIP)");
+        JMenuItem highAccuracy = new JMenuItem("High Accuracy");
+        highAccuracy.addActionListener(e -> ((DispPane) getContentPane()).getDifferencePanel().setAccurate(true));
         difference.add(highAccuracy);
 
-        JMenuItem lowAccuracy = new JMenuItem("Low Accuracy (default) (WIP)");
+        JMenuItem lowAccuracy = new JMenuItem("Low Accuracy (default)");
+        lowAccuracy.addActionListener(e -> ((DispPane) getContentPane()).getDifferencePanel().setAccurate(false));
         difference.add(lowAccuracy);
 
         return difference;

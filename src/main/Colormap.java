@@ -52,38 +52,56 @@ public class Colormap {
      * @return custom grayscale pixel value
      */
     public int determinePos(double r, double g, double b) {
-        DecimalFormat df = new DecimalFormat("#.#####");
 
-        int redIndex = getClosestIndex(red, r);
-        int greenIndex = getClosestIndex(green, g);
-        int blueIndex = getClosestIndex(blue, b);
+        ArrayList<Integer> redClose = getAllIndexCloseTo(red, r);
+        ArrayList<Integer> greenClose = getAllIndexCloseTo(green, g);
+        ArrayList<Integer> blueClose = getAllIndexCloseTo(blue, b);
 
-        if (redIndex - greenIndex < 10) {
-            return (int) Math.round(position.get(greenIndex) * 255);
-        } else if (redIndex - blueIndex < 10) {
-            return (int) Math.round(position.get(blueIndex) * 255);
-        } else {
-            return (int) Math.round(position.get(greenIndex) * 255);
+        for (int red : redClose) {
+            for (int green : greenClose) {
+                if (red == green) {
+                    for (int blue : blueClose) {
+                        if (red == blue) {
+                            return red;
+                        }
+                    }
+                }
+            }
         }
 
+        return 0;
 
     }
 
     /**
-     * Get the index of the closet value in an arraylist
-     * @return closet index
+     * Get all the indices in a double arraylist that are
+     * close to value n
+     * @param arr double arraylist
+     * @param n number
+     * @return all indices close to n
      */
-    private int getClosestIndex(ArrayList<Double> arr, double n) {
-        double distance = Math.abs(arr.get(0) - n);
-        int idx = 0;
-        for(int i = 1; i < arr.size(); i++){
-            double iDistance = Math.abs(arr.get(i) - n);
-            if(iDistance < distance){
-                idx = i;
-                distance = iDistance;
+    private ArrayList<Integer> getAllIndexCloseTo(ArrayList<Double> arr, double n) {
+
+        ArrayList<Integer> indices = new ArrayList<>();
+        for (int i = 0; i < arr.size(); i++) {
+            double element = arr.get(i);
+            if (approximatelyEqual(element, n)) {
+                indices.add(i);
             }
         }
-        return idx;
+        return indices;
+    }
+
+    /**
+     * If absolute value of two numbers is less than 0.03,
+     * they are approximately equal.
+     * 0.03 is a semi randomly chosen number.
+     * @param x number 1
+     * @param y number 2
+     * @return true if they are approxmiately equal
+     */
+    private boolean approximatelyEqual(double x, double y) {
+        return Math.abs(x - y) < 0.03;
     }
 
 }
