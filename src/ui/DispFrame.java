@@ -3,8 +3,11 @@ package ui;
 import main.SimComparisonTool;
 import ui.subpanels.actionListeners.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,10 +22,24 @@ public class DispFrame extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setMinimumSize(new Dimension(400, 200));
         setContentPane(new DispPane());
+        initIcon();
         initMenuBar();
         this.addKeyListener();
         setVisible(true);
 
+    }
+
+    /**
+     * Initializes the icon for disp frame
+     */
+    private void initIcon() {
+
+        try {
+            Image icon = ImageIO.read(new File(System.getenv("LOCALAPPDATA") + File.separator + SimComparisonTool.SCT_FOLDER_NAME + File.separator + "vettel.png"));
+            setIconImage(icon);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

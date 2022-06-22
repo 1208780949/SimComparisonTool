@@ -13,14 +13,14 @@ public class SettingsIO {
 
     // names
     private static final String SETTINGS_FILE_NAME = "Settings.txt";
-    private static final String SCT_FOLDER_NAME = "SimComparisonTool";
+
 
     //s settings
     Properties settings;
 
     public SettingsIO() {
 
-        SCT_FOLDER_DIR = System.getenv("LOCALAPPDATA") + File.separator + SCT_FOLDER_NAME;
+        SCT_FOLDER_DIR = System.getenv("LOCALAPPDATA") + File.separator + SimComparisonTool.SCT_FOLDER_NAME;
         SETTINGS_FILE_DIR = SCT_FOLDER_DIR + File.separator + SETTINGS_FILE_NAME;
         settingsFile = new File(SETTINGS_FILE_DIR);
         settings = new Properties();

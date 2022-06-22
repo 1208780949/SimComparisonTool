@@ -11,12 +11,11 @@ import java.util.concurrent.BlockingDeque;
 public class OverlayPanel extends Subpanel {
 
     private BufferedImage overlayImg;
-    private final JLabel picture;
     private float alpha = 0.5f; // default 50% transparency for overlay
     private boolean autoUpdate;
 
     public OverlayPanel() {
-        picture = new JLabel();
+        super();
         picture.setHorizontalAlignment(JLabel.CENTER);
         picture.setVerticalAlignment(JLabel.CENTER);
 

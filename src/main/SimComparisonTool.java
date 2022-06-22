@@ -2,6 +2,8 @@ package main;
 
 import sim.Sim;
 import ui.DispFrame;
+import ui.subpanels.SimDisplayPanel;
+import ui.subpanels.Subpanel;
 
 import java.io.File;
 
@@ -11,6 +13,7 @@ public class SimComparisonTool {
     public static SettingsIO settingsIO;
     public static Sim sim1;
     public static Sim sim2;
+    public static final String SCT_FOLDER_NAME = "SimComparisonTool";
 
     // sim displayer parameter
     // doing it here to ensure the two sims have the same picture displayed
@@ -37,6 +40,10 @@ public class SimComparisonTool {
         // initialize display frame
         dispFrame = new DispFrame();
 
+        // show default pictures
+        for (int i = 0; i < 4; i++) {
+            ((Subpanel) dispFrame.getContentPane().getComponent(i)).showDefaultPic();
+        }
     }
 
     /**

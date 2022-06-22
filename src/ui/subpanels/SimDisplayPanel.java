@@ -1,18 +1,22 @@
 package ui.subpanels;
 
+import main.SimComparisonTool;
 import sim.Sim;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class SimDisplayPanel extends Subpanel {
 
     private final Sim sim;
-    JLabel picture;
 
     public SimDisplayPanel(Sim sim) {
-
+        super();
         this.sim = sim;
-        picture = new JLabel();
         picture.setHorizontalAlignment(JLabel.CENTER);
         picture.setVerticalAlignment(JLabel.CENTER);
         add(picture);

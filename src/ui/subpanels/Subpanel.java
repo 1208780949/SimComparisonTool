@@ -1,18 +1,27 @@
 package ui.subpanels;
 
+import main.SimComparisonTool;
 import ui.DispPane;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 import static javax.swing.BorderFactory.createLineBorder;
 
 public class Subpanel extends JPanel {
 
+    protected final JLabel picture;
+
     public Subpanel() {
+
+        this.picture = new JLabel();
+
         setLayout(new GridLayout(1, 1, 1, 1));
         setBorder(createLineBorder(Color.BLACK));
         addFocusListener(new FocusListener() {
@@ -26,6 +35,18 @@ public class Subpanel extends JPanel {
                 setBorder(createLineBorder(Color.BLACK));
             }
         });
+    }
+
+    /**
+     * Renders the default picture
+     */
+    public void showDefaultPic() {
+        try {
+            BufferedImage icon = ImageIO.read(new File(System.getenv("LOCALAPPDATA") + File.separator + SimComparisonTool.SCT_FOLDER_NAME + File.separator + "vettel.png"));
+            picture.setIcon(new ImageIcon(imgResize(icon)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

@@ -12,11 +12,10 @@ public class DifferencePanel extends Subpanel {
 
 
     private BufferedImage differenceImg;
-    private final JLabel picture;
     private boolean autoUpdate;
 
     public DifferencePanel() {
-        picture = new JLabel();
+        super();
         picture.setHorizontalAlignment(JLabel.CENTER);
         picture.setVerticalAlignment(JLabel.CENTER);
 
