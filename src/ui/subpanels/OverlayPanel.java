@@ -16,12 +16,7 @@ public class OverlayPanel extends Subpanel {
 
     public OverlayPanel() {
         super();
-        picture.setHorizontalAlignment(JLabel.CENTER);
-        picture.setVerticalAlignment(JLabel.CENTER);
-
         autoUpdate = SimComparisonTool.settingsIO.getBoolSetting(SettingsKeys.OVERLAY_PANE_AUTO_UPDATE);
-
-        add(picture);
     }
 
     @Override

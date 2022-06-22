@@ -1,28 +1,23 @@
 package ui.subpanels;
 
+import main.Colormap;
 import main.SettingsKeys;
 import main.SimComparisonTool;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.nio.Buffer;
 
 public class DifferencePanel extends Subpanel {
 
-
+    private Colormap colormap;
     private BufferedImage differenceImg;
     private boolean autoUpdate;
 
     public DifferencePanel() {
         super();
-        picture.setHorizontalAlignment(JLabel.CENTER);
-        picture.setVerticalAlignment(JLabel.CENTER);
-
-        // auto update
         autoUpdate = SimComparisonTool.settingsIO.getBoolSetting(SettingsKeys.DIFFERENCE_PANE_AUTO_UPDATE);
-
-        add(picture);
+        colormap = new Colormap();
     }
 
     @Override
@@ -44,8 +39,8 @@ public class DifferencePanel extends Subpanel {
         if (sim1Pic != null && sim2Pic != null) {
 
             // custom grayscale conversion
-            BufferedImage gs1 = customGrayscale(sim1Pic);
-            BufferedImage gs2 = customGrayscale(sim2Pic);
+            BufferedImage gs1 = customGrayscaleAccurate(sim1Pic);
+            BufferedImage gs2 = customGrayscaleAccurate(sim2Pic);
 
             // if differenceImg is not initialized, initialize it
             if (differenceImg == null) {
@@ -87,7 +82,7 @@ public class DifferencePanel extends Subpanel {
      * @param img image
      * @return custom grayscale image
      */
-    private BufferedImage customGrayscale(BufferedImage img) {
+    private BufferedImage customGrayscaleQuick(BufferedImage img) {
 
         // get size of picture
         int width = img.getWidth();
@@ -142,6 +137,30 @@ public class DifferencePanel extends Subpanel {
 
         return newImg;
 
+    }
+
+    private BufferedImage customGrayscaleAccurate(BufferedImage img) {
+
+        // get size of picture
+        int width = img.getWidth();
+        int height = img.getHeight();
+        BufferedImage newImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+        // initialize
+        // Doing this outside of the loop to make it faster
+        int[] color = new int[3];
+        Color pixel;
+
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                color = img.getRaster().getPixel(i, j, new int[3]);
+                int grayscale = colormap.determinePos(0, color[1] / 255.0, 0);
+                pixel = new Color(grayscale, grayscale ,grayscale);
+                newImg.setRGB(i, j, pixel.getRGB());
+            }
+        }
+
+        return newImg;
     }
 
     private BufferedImage imageSubtract(BufferedImage img1, BufferedImage img2) {

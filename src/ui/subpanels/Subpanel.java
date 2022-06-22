@@ -20,7 +20,11 @@ public class Subpanel extends JPanel {
 
     public Subpanel() {
 
+        // picture label
         this.picture = new JLabel();
+        picture.setHorizontalAlignment(JLabel.CENTER);
+        picture.setVerticalAlignment(JLabel.CENTER);
+        add(picture);
 
         setLayout(new GridLayout(1, 1, 1, 1));
         setBorder(createLineBorder(Color.BLACK));
