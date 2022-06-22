@@ -35,7 +35,7 @@ public class DispFrame extends JFrame {
     private void initIcon() {
 
         try {
-            Image icon = ImageIO.read(new File(System.getenv("LOCALAPPDATA") + File.separator + SimComparisonTool.SCT_FOLDER_NAME + File.separator + "vettel.png"));
+            Image icon = ImageIO.read(new File(System.getenv("LOCALAPPDATA") + File.separator + SimComparisonTool.SCT_FOLDER_NAME + File.separator + "ICON"));
             setIconImage(icon);
         } catch (IOException e) {
             e.printStackTrace();

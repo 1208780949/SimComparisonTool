@@ -29,7 +29,7 @@ public class Colormap {
      */
     private void importColormap() {
 
-        try (BufferedReader br = new BufferedReader(new FileReader(System.getenv("LOCALAPPDATA") + File.separator + SimComparisonTool.SCT_FOLDER_NAME + File.separator + "TurboMap.csv"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(System.getenv("LOCALAPPDATA") + File.separator + SimComparisonTool.SCT_FOLDER_NAME + File.separator + "TurboMap"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");

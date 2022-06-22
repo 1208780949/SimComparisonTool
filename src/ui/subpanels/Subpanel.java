@@ -46,7 +46,7 @@ public class Subpanel extends JPanel {
      */
     public void showDefaultPic() {
         try {
-            BufferedImage icon = ImageIO.read(new File(System.getenv("LOCALAPPDATA") + File.separator + SimComparisonTool.SCT_FOLDER_NAME + File.separator + "vettel.png"));
+            BufferedImage icon = ImageIO.read(new File(System.getenv("LOCALAPPDATA") + File.separator + SimComparisonTool.SCT_FOLDER_NAME + File.separator + "ICON"));
             picture.setIcon(new ImageIcon(imgResize(icon)));
         } catch (IOException e) {
             e.printStackTrace();
