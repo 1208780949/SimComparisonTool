@@ -1,6 +1,7 @@
 package ui;
 
 import main.SimComparisonTool;
+import ui.reports.ReportsFrame;
 import ui.subpanels.actionListeners.*;
 
 import javax.imageio.ImageIO;
@@ -56,6 +57,7 @@ public class DispFrame extends JFrame {
         menuBar.add(initViewMenu());
         menuBar.add(initDifferenceMenu());
         menuBar.add(initOverlayMenu());
+        menuBar.add(initReportsMenu());
 
         // add menu bar to ui.DispFrame
         setJMenuBar(menuBar);
@@ -222,6 +224,24 @@ public class DispFrame extends JFrame {
     }
 
     /**
+     * Create reports menu that will handle everything
+     * in the Reports folder
+     * @return report
+     */
+    private JMenu initReportsMenu() {
+        JMenu report = new JMenu("Reports");
+
+        JMenuItem showReportsFile = new JMenuItem("Show Reports File");
+        showReportsFile.addActionListener(e -> new ReportsFrame());
+        report.add(showReportsFile);
+
+        JMenuItem showConvergenceFile = new JMenuItem("Show Convergence File");
+        report.add(showConvergenceFile);
+
+        return report;
+    }
+
+    /**
      * Add key listener to every component so no matter
      * where the focus it, it will always respond
      */
@@ -310,7 +330,7 @@ public class DispFrame extends JFrame {
         sortedFileNames = Arrays.stream(files).sorted().toList();
     }
 
-    // settes
+    // setters
 
     @Override
     public void setTitle(String title) {
