@@ -235,7 +235,7 @@ public class DispFrame extends JFrame {
         showReportsFile.addActionListener(e -> new ReportsFrame());
         report.add(showReportsFile);
 
-        JMenuItem showConvergenceFile = new JMenuItem("Show Convergence File");
+        JMenuItem showConvergenceFile = new JMenuItem("(WIP) Show Convergence File");
         report.add(showConvergenceFile);
 
         return report;

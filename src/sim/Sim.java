@@ -6,8 +6,12 @@ import main.SimComparisonTool;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Sim {
 
@@ -17,14 +21,15 @@ public class Sim {
     BufferedImage picture;
     BufferedImage resizedCopy;
     JFileChooser fc; // I'm initializing this in constructor because JFileChooser is extremely slow to initialize
+    private ArrayList<String> report;
 
     // which picture is it
 
     public Sim() {
         String defaultDirectory = SimComparisonTool.settingsIO.getSetting(SettingsKeys.DEFAULT_DIRECTORY);
         simDir = defaultDirectory == null ? System.getProperty("user.dir") : defaultDirectory;
+        report = new ArrayList<>();
         fc = new JFileChooser(simDir);
-
     }
 
     /**
@@ -47,6 +52,7 @@ public class Sim {
         if (isValid) {
             String[] simDirFolders = simDir.split("\\\\"); // 4 backslashes are necessary
             simName = simDirFolders[simDirFolders.length - 1];
+            readReport();
             showPicture();
         }
 
@@ -125,6 +131,32 @@ public class Sim {
         }
     }
 
+    // reports
+
+    /**
+     * Read report upon opening a new sim
+     */
+    private void readReport() {
+
+        try (BufferedReader br = new BufferedReader(new FileReader(simDir + File.separator + "Reports" + File.separator + "Reports.csv"))) {
+
+            int lineNum = 0;
+            String line;
+            while ((line = br.readLine()) != null) {
+                if (lineNum == 1) {
+                    // only read the second line
+                    String[] values = line.split(",");
+                    report.addAll(Arrays.asList(values));
+                } else {
+                    lineNum++;
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     // file name manipulation
 
     /**
@@ -168,7 +200,6 @@ public class Sim {
         this.resizedCopy = resizedCopy;
     }
 
-
     // getter
 
     public boolean isValid() {
@@ -189,5 +220,9 @@ public class Sim {
 
     public String getSimName() {
         return simName;
+    }
+
+    public String getReportValueAt(int i) {
+        return report.get(i);
     }
 }

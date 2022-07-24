@@ -2,6 +2,7 @@ package main;
 
 import sim.Sim;
 import ui.DispFrame;
+import ui.reports.ReportsFrame;
 import ui.subpanels.SimDisplayPanel;
 import ui.subpanels.Subpanel;
 
