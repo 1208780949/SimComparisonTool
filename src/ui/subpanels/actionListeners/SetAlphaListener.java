@@ -42,7 +42,6 @@ public class SetAlphaListener implements ActionListener {
 
     private void confirm(JSlider slider, JFrame frame) {
         ((DispPane) SimComparisonTool.dispFrame.getContentPane()).getOverlayPanel().setAlpha((float) slider.getValue() / 100);
-        frame.dispose();
         ((DispPane) SimComparisonTool.dispFrame.getContentPane()).getOverlayPanel().respond();
     }
 }
