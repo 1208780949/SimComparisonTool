@@ -81,8 +81,8 @@ public class Sim {
      */
     private boolean checkValidity() {
 
-        File scenes2D = new File(simDir + File.separator + "2D scenes");
-        File scenes3D = new File(simDir + File.separator + "3D scenes");
+        File scenes2D = new File(simDir + File.separator + "Plots");
+        File scenes3D = new File(simDir + File.separator + "Reports");
         if (!(scenes2D.exists() && scenes3D.exists())) {
             JOptionPane.showConfirmDialog(null, "Sim chosen is invalid", "Invalid Sim", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
             return false;

@@ -96,12 +96,18 @@ public class DispFrame extends JFrame {
         JMenu scenes2DMenu = new JMenu("2D scenes");
         JMenuItem cp2d = new JMenuItem("Pressure Coefficient");
         JMenuItem cpt2d = new JMenuItem("Total Pressure Coefficient");
+        JMenuItem inwash2d = new JMenuItem("Inwash");
+        JMenuItem velX2d = new JMenuItem("Velocity X");
+        JMenuItem velZ2d = new JMenuItem("Velocity Z");
         JMenuItem vel2d = new JMenuItem("Velocity Glyph");
         JMenuItem fa2d = new JMenuItem("Flow Angularity");
         JMenuItem vorticity2d = new JMenuItem("Vorticity");
         cp2d.addActionListener(new ChangePictureActionListener(ChangePictureActionListener.Parameter.DISPLAYER, "Pressure", true));
         cpt2d.addActionListener(new ChangePictureActionListener(ChangePictureActionListener.Parameter.DISPLAYER, "Total Pressure", true));
         vel2d.addActionListener(new ChangePictureActionListener(ChangePictureActionListener.Parameter.DISPLAYER, "Velocity Glyph", true));
+        inwash2d.addActionListener(new ChangePictureActionListener(ChangePictureActionListener.Parameter.DISPLAYER, "Inwash", true));
+        velX2d.addActionListener(new ChangePictureActionListener(ChangePictureActionListener.Parameter.DISPLAYER, "Velocity X", true));
+        velZ2d.addActionListener(new ChangePictureActionListener(ChangePictureActionListener.Parameter.DISPLAYER, "Velocity Z", true));
         fa2d.addActionListener(new ChangePictureActionListener(ChangePictureActionListener.Parameter.DISPLAYER, "Flow Angularity", true));
         vorticity2d.addActionListener(new ChangePictureActionListener(ChangePictureActionListener.Parameter.DISPLAYER, "Vorticity", true));
         scenes2DMenu.add(cp2d);
