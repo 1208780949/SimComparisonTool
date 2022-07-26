@@ -4,3 +4,5 @@ if not exist %localappdata%\SimComparisonTool (mkdir %localappdata%\SimCompariso
 rem move ICON and TurboMap to sim comparison tool directory
 copy .\content\ICON %localappdata%\SimComparisonTool
 copy .\content\TurboMap %localappdata%\SimComparisonTool
+
+pause
