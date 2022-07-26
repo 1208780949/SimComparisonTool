@@ -141,6 +141,9 @@ public class Sim {
      */
     private void readReport() {
 
+        // clear report array list
+        report.clear();
+
         try (BufferedReader br = new BufferedReader(new FileReader(simDir + File.separator + "Reports" + File.separator + "Reports.csv"))) {
 
             int lineNum = 0;
