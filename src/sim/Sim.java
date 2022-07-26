@@ -99,8 +99,11 @@ public class Sim {
     private void showPicture() {
 
         try {
-            picture = ImageIO.read(new File(getFileDirectory()));
-            SimComparisonTool.dispFrame.setTitle(SimComparisonTool.displayerName + " " + SimComparisonTool.position + " " + SimComparisonTool.viewName);
+            File file = new File(getFileDirectory());
+            if (file.exists()) {
+                picture = ImageIO.read(new File(getFileDirectory()));
+                SimComparisonTool.dispFrame.setTitle(SimComparisonTool.displayerName + " " + SimComparisonTool.position + " " + SimComparisonTool.viewName);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -112,6 +112,9 @@ public class DispFrame extends JFrame {
         vorticity2d.addActionListener(new ChangePictureActionListener(ChangePictureActionListener.Parameter.DISPLAYER, "Vorticity", true));
         scenes2DMenu.add(cp2d);
         scenes2DMenu.add(cpt2d);
+        scenes2DMenu.add(inwash2d);
+        scenes2DMenu.add(velX2d);
+        scenes2DMenu.add(velZ2d);
         scenes2DMenu.add(vel2d);
         scenes2DMenu.add(fa2d);
         scenes2DMenu.add(vorticity2d);
@@ -136,7 +139,7 @@ public class DispFrame extends JFrame {
         view.add(positionMenu);
 
         // 3d scenes menu
-        JMenu scene3DMenu = new JMenu("3D scenes");
+        JMenu scene3DMenu = new JMenu("3D scenes (legacy)");
         JMenuItem cp3d = new JMenuItem("Pressure Coefficient");
         JMenuItem wss3d = new JMenuItem("WSS Flow Separation Indicator");
         cp3d.addActionListener(new ChangePictureActionListener(ChangePictureActionListener.Parameter.DISPLAYER, "Pressure", false));

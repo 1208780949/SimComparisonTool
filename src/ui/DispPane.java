@@ -68,8 +68,10 @@ public class DispPane extends JPanel {
      * Updates all four pictures
      */
     public void updatePictures() {
-        simDisplayPanelLeft.updatePicture();
-        simDisplayPanelRight.updatePicture();
+        if (SimComparisonTool.sim1.getPicture() != null)
+            simDisplayPanelLeft.updatePicture();
+        if (SimComparisonTool.sim2.getPicture() != null)
+            simDisplayPanelRight.updatePicture();
         differencePanel.showPicture(false);
         overlayPanel.showPicture(false);
     }
